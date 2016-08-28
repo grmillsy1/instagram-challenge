@@ -2,9 +2,10 @@
 <br>
 <% if @photos.any? %>
   <% @photos.each do |photo| %>
+  <h3> <%= link_to photo.tag, photo_path(photo) %> </h3>
   <%= image_tag photo.image.url(:thumb) %>
-    <h3> <%= photo.tag %> </h2>
   <%end%>
+  <br>
   <a href='/photos/new'>Upload a photo</a>
 <%else %>
   No photos uploaded yet.

@@ -28,14 +28,28 @@ require 'rails_helper'
       end
     end
 
-    context 'creating restaurants' do
+    context 'creating posts' do
+      before do
+        sign_up
+        Photo.create(tag: 'day at the beach')
+      end
       scenario 'user fills out a form, and can see the photo on the website' do
         visit '/photos'
-        click_link 'Upload photo'
+        click_link 'Upload a photo'
         fill_in 'Tag', with: 'Day by the beach'
-        click_button 'Post photo'
+        click_button 'Create Photo'
         expect(page).to have_content 'Day by the beach'
         expect(current_path).to eq '/photos'
+      end
+    end
+
+    context 'view posts' do
+      let!(:wedding) { Photo.create(tag:'wedding') }
+      scenario 'let a user view a photo' do
+        visit '/photos'
+        click_link 'wedding'
+        expect(page).to have_content 'wedding'
+        expect(current_path).to eq "/photos/#{wedding.id}"
       end
     end
   end
